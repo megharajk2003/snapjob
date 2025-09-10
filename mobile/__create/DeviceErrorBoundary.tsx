@@ -3,7 +3,12 @@ import { SharedErrorBoundary, Button } from './SharedErrorBoundary';
 import * as Updates from 'expo-updates';
 import { SplashScreen } from 'expo-router/build/exports';
 import { DevSettings, LogBox, Platform, View } from 'react-native';
-import { serializeError } from 'serialize-error';
+// Simple error serialization helper
+const serializeError = (error: any) => ({
+  name: error?.name || 'Error',
+  message: error?.message || 'Unknown error',
+  stack: error?.stack || ''
+});
 import { reportErrorToRemote } from './report-error-to-remote';
 
 type ErrorBoundaryState = { hasError: boolean; error: unknown | null; sentLogs: boolean };

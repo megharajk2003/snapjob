@@ -1,4 +1,9 @@
-import { serializeError } from 'serialize-error';
+// Simple error serialization helper
+const serializeError = (error) => ({
+  name: error?.name || 'Error',
+  message: error?.message || 'Unknown error',
+  stack: error?.stack || ''
+});
 
 export const reportErrorToRemote = async ({ error }) => {
   if (

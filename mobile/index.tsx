@@ -15,7 +15,12 @@ import { SplashScreen } from 'expo-router';
 import { App } from 'expo-router/build/qualified-entry';
 import { type ReactNode, memo, useEffect } from 'react';
 import { AppRegistry, LogBox, SafeAreaView, Text, View } from 'react-native';
-import { serializeError } from 'serialize-error';
+// Simple error serialization helper
+const serializeError = (error: any) => ({
+  name: error?.name || 'Error',
+  message: error?.message || 'Unknown error',
+  stack: error?.stack || ''
+});
 import { DeviceErrorBoundaryWrapper } from './__create/DeviceErrorBoundary';
 import { ErrorBoundaryWrapper, SharedErrorBoundary } from './__create/SharedErrorBoundary';
 

@@ -1,4 +1,10 @@
-import { isErrorLike, serializeError } from 'serialize-error';
+// Simple error helpers
+const isErrorLike = (value: any) => value && typeof value.message === 'string';
+const serializeError = (error: any) => ({
+  name: error?.name || 'Error',
+  message: error?.message || 'Unknown error',
+  stack: error?.stack || ''
+});
 import React, { type ReactNode, useEffect, useState, useCallback, useRef } from 'react';
 import { Animated, Text, View } from 'react-native';
 
