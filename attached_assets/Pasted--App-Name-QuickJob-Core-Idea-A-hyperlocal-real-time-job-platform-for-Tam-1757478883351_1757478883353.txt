@@ -1,0 +1,100 @@
+### App Name:
+QuickJob (உடனடி வேலை)
+
+### Core Idea:
+A hyperlocal, real-time job platform for Tamil Nadu, engineered with the speed and map-based UI of Rapido. The primary differentiator is deep cultural integration, robust trust mechanisms, and a user experience optimized for the local market in 2025.
+
+### Target Market Context (Chennai, Q4 2025):
+* **User Base:** Assumes high smartphone penetration with ubiquitous 4G/5G access. Users are highly proficient with UPI payments (GPay, PhonePe are defaults).
+* **Market Need:** A strong demand for flexible gig work exists, but trust is the primary barrier. Users prioritize safety and reliability over the lowest price.
+* **Language:** "Tanglish" (Tamil typed in English script) is as common as the Tamil script in daily communication. The app must support all three inputs: English, Tamil, and Tanglish.
+
+---
+
+### Detailed App Structure & Navigation (Specifics)
+
+#### **A. Common Pages & Precision Onboarding**
+
+1.  **Splash Screen:** App logo with a subtle animation.
+2.  **Language Selection:** One-time choice: `English` | `தமிழ்` (This choice dictates the UI script).
+3.  **Login / Sign Up Screen:**
+    * **Primary:** Integrate **Truecaller's 1-Tap SDK** for frictionless, mobile number-verified sign-up. This is the expected standard for high user conversion in India.
+    * **Fallback:** Standard mobile number input with OTP verification via a reliable provider like Gupshup or Twilio.
+4.  **Role Selection Screen:**
+    * Clear, icon-based choice: "வேலை தேட (Find Work)" vs. "வேலை கொடுக்க (Post Work)".
+    * Add a microcopy line: "You can switch roles later from your profile."
+
+---
+
+#### **B. Job Provider (Seeker) - Precision Flow & Navigation**
+
+**Onboarding Screens (First-time flow):**
+* **Profile Setup:** Upload Photo (with face detection to ensure a real person), Enter Full Name as per government ID.
+* **Skills & Portfolio:**
+    * **Skill Selection:** User must select one **Primary Skill** (determines their map icon, e.g., a hammer for a carpenter) and up to five **Secondary Skills**.
+    * **Hyper-Specific Skill List:** The list must be localized.
+        * *Examples:* `Golu Padi Setup Assistant`, `Chettinad Sambar Specialist`, `Varalakshmi Pooja Decoration`, `School Project Model Making`, `Murali/Tanjore Painting`, `Aari Embroidery Blouse Work`.
+    * **Video Portfolio:** Allow 30-second video uploads for each skill (leveraging 5G), which is far more impactful than images for dynamic skills like cooking or painting.
+* **Verification (Crucial for Trust):**
+    * Implement optional **Aadhaar e-KYC verification** via a secure third-party API (e.g., DigiLocker). Successful verification grants a prominent **"சரிபார்க்கப்பட்டது (Verified)"** badge on the profile.
+
+**Main App Interface (Bottom Navigation Bar):**
+`[முகப்பு (Home)] | [என் வேலைகள் (My Jobs)] | [வருமானம் (Earnings)] | [சுயவிவரம் (Profile)]`
+
+1.  **Home Screen (முகப்பு):**
+    * **Availability Toggle:** A large, prominent toggle: `இப்போது வேலைக்கு தயார் (Available for work now)`.
+    * **Map View:** Default view with job pins. Pins are color-coded: Red (Urgent/ASAP), Blue (Scheduled).
+    * **Dynamic Pricing Info:** Display "High Demand Areas" on the map where certain skills (e.g., catering help during lunch hours) might fetch a higher price.
+
+2.  **Job Details Screen:**
+    * Hirer's profile photo, name, and their average rating (e.g., `4.5☆ | 15 Jobs Posted`).
+    * Exact distance calculated from Provider's current location (e.g., `1.2 km away`).
+    * Clear display of payment: `மொத்த விலை: ₹500` (Fixed Price) or `மணிக்கு: ₹200` (Hourly).
+    * Button: **"விண்ணப்பிக்கவும் (Apply)"**.
+
+3.  **My Jobs Screen (என் வேலைகள்):**
+    * Tabs: `விண்ணப்பித்தவை (Applied)` | `நடப்பில் உள்ளவை (Ongoing)` | `முடிந்தவை (Completed)`.
+
+4.  **Earnings Screen (வருமானம்):**
+    * **Integration:** Use **Razorpay Route** for backend payment processing.
+    * **Commission:** Transparently show the Gross Earning, "QuickJob Fee (15%)", and Net Earning for each job.
+    * **Withdrawal:** One-tap withdrawal to the user's primary UPI ID. Minimum withdrawal amount: ₹100. Processing time: Instant/within 2 hours.
+
+---
+
+#### **C. Hirer (Job Giver) - Precision Flow & Navigation**
+
+**Main App Interface (Bottom Navigation Bar):**
+`[முகப்பு (Home)] | [என் பதிவுகள் (My Postings)] | [சுயவிவரம் (Profile)]`
+
+1.  **Home Screen (முகப்பு):**
+    * **Primary CTA:** A floating action button (FAB) with a '+' icon for "புதிய வேலையை இடுகையிடவும் (Post a New Job)".
+    * **Map View:** Live map of `Verified` Providers nearby, showcasing their primary skill icon and average rating.
+
+2.  **Post a Job Flow:**
+    * **Job Templates:** Offer one-tap templates for common tasks: e.g., "Fix Leaking Tap," "Assemble Furniture," "Urgent Passport Photo."
+    * **Budget Field:** For hourly jobs, show a suggested rate range based on the skill category and location to guide the Hirer.
+    * **"Verified Providers Only" Checkbox:** A premium feature or a standard option to restrict applications to only those with the Aadhaar-verified badge.
+
+3.  **Applicants Screen:**
+    * Applicants are sorted by a weighted algorithm: `Verification Status > Rating > Proximity > Profile Completion %`.
+    * Each applicant card prominently displays the "Verified" badge, rating, and number of completed jobs.
+    * Button: **"சுயவிவரத்தைக் காண்க (View Profile)"**.
+
+4.  **Provider Profile Screen (View):**
+    * Immediate view of the video portfolio.
+    * Button: **"வேலைக்கு அமர்த்து (Hire)"**. On tap, a payment summary appears for pre-authorization via UPI.
+
+5.  **Ongoing Job Screen:**
+    * **Safety Feature:** An **"SOS/அவசரம்" button** that can be pressed to discreetly alert QuickJob support and a pre-saved emergency contact.
+    * **Completion Flow:** The "Confirm Completion" button requires the Hirer to enter a 4-digit "Completion PIN" which is shared with them in-app. The Provider must enter this PIN on their device to finalize the job, preventing disputes.
+
+---
+
+### **D. Core Functionality (Hyper-Specific Details)**
+
+* **In-App Chat:** Supports text and image sharing (for clarifying work details). Pre-set message templates in Tamil and Tanglish (e.g., "On my way" -> "Naan vandutu iruken", "Where is the exact location?" -> "Sariyana idam engiruku?").
+* **Granular Push Notifications (Localized):**
+    * **Provider:** *"அவசரம்! உங்களுக்கு 1km தூரத்தில், ஒரு மணி நேர சமையல் வேலை உள்ளது. சம்பளம்: ₹300."* (Urgent! A 1-hour cooking job is available 1km from you. Salary: ₹300).
+    * **Hirer:** *"உங்கள் பிளவுஸ் டிசைனர் வேலைக்கு கவிதா விண்ணப்பித்துள்ளார். அவரது ரேட்டிங் 4.8☆ மற்றும் அவர் சரிபார்க்கப்பட்ட பயனர்."* (Kavitha has applied for your blouse designer job. Her rating is 4.8☆ and she is a Verified User).
+* **Review System:** After rating, users are prompted to select positive tags (e.g., `Polite`, `On Time`, `Excellent Skill`) which get displayed on profiles.

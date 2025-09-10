@@ -1,0 +1,113 @@
+App Name:
+QuickJob (உடனடி வேலை)
+
+Core Idea:
+A hyperlocal, real-time job platform for Tamil Nadu, engineered with the speed and map-based UI of Rapido. The primary differentiator is deep cultural integration, robust trust mechanisms, and a user experience optimized for the local market in 2025.
+
+Target Market Context (Chennai, Q4 2025):
+User Base: Assumes high smartphone penetration with ubiquitous 5G access. Users are highly proficient with UPI payments (GPay, PhonePe are defaults).
+
+Market Need: A strong demand for flexible gig work exists, but trust is the primary barrier. Users prioritize safety and reliability over the lowest price.
+
+Language: "Tanglish" (Tamil typed in English script) is as common as the Tamil script in daily communication. The app must support all three inputs: English, Tamil, and Tanglish.
+
+Detailed App Structure & Navigation (Specifics)
+This section remains the same as the previous version, detailing the UI/UX flow for both user roles.
+
+Backend Logic & MongoDB Data Architecture
+This section specifies the technical implementation for the backend, using a Node.js environment with MongoDB.
+
+1. MongoDB Collections & Schemas
+Collection: users
+Stores data for both Hirers and Providers in a single collection, differentiated by role.
+
+{
+  "_id": "ObjectId",
+  "mobileNumber": "+919876543210", // Indexed, Unique
+  "role": "provider", // 'provider' or 'hirer'
+  "firstName": "Kavitha",
+  "lastName": "Raman",
+  "profilePictureUrl": "[https://cdn.quickjob.app/](https://cdn.quickjob.app/)...",
+  "languagePreference": "ta", // 'en' or 'ta'
+  "isAadhaarVerified": true, // Boolean, Indexed
+  "avgRating": 4.8,
+  "createdAt": "ISODate",
+  "providerProfile": { // Sub-document, exists only if role is 'provider'
+    "primarySkill": "Aari Embroidery Blouse Work",
+    "secondarySkills": ["Saree Draping", "Mehendi Design"],
+    "portfolio": [
+      {
+        "skill": "Aari Embroidery Blouse Work",
+        "mediaUrl": "[https://cdn.quickjob.app/](https://cdn.quickjob.app/)...",
+        "mediaType": "video" // 'image' or 'video'
+      }
+    ],
+    "isAvailable": true, // Boolean, critical for map view
+    "currentLocation": { // GeoJSON for geospatial queries
+      "type": "Point",
+      "coordinates": [80.2707, 13.0827] // [longitude, latitude]
+    },
+    "totalJobsCompleted": 25
+  },
+  "hirerProfile": { // Sub-document, exists only if role is 'hirer'
+    "totalJobsPosted": 5
+  }
+}
+
+Indexes: mobileNumber (unique), currentLocation (2dsphere), isAadhaarVerified.
+
+Collection: jobs
+Stores all job postings and their real-time status.
+
+{
+  "_id": "ObjectId",
+  "hirerId": "ObjectId(ref:users)", // Indexed
+  "assignedProviderId": "ObjectId(ref:users)", // Populated after hiring
+  "title": "Urgent Aari Work for Wedding Blouse",
+  "description": "Need intricate Aari embroidery work completed for a silk blouse within 3 days. Material will be provided.",
+  "category": "Tailoring",
+  "location": { // GeoJSON for geospatial queries
+    "type": "Point",
+    "coordinates": [80.2750, 13.0900]
+  },
+  "addressString": "123, T. Nagar, Chennai",
+  "status": "open", // 'open', 'assigned', 'in_progress', 'completed', 'cancelled' - Indexed
+  "paymentType": "fixed", // 'fixed' or 'hourly'
+  "budget": {
+    "amount": 2500,
+    "currency": "INR"
+  },
+  "postedAt": "ISODate",
+  "scheduledFor": "ISODate",
+  "completionPin": "7531" // 4-digit PIN generated on assignment
+}
+
+Indexes: location (2dsphere), status, category.
+
+Collection: applications
+Tracks which Providers have applied for which jobs. A lean and efficient linking collection.
+
+{
+  "_id": "ObjectId",
+  "jobId": "ObjectId(ref:jobs)", // Indexed
+  "providerId": "ObjectId(ref:users)", // Indexed
+  "hirerId": "ObjectId(ref:users)",
+  "status": "pending", // 'pending', 'accepted', 'rejected'
+  "appliedAt": "ISODate"
+}
+
+Indexes: A compound index on [jobId, providerId].
+
+Collection: reviews
+Stores ratings and reviews after job completion.
+
+{
+  "_id": "ObjectId",
+  "jobId": "ObjectId(ref:jobs)",
+  "reviewerId": "ObjectId(ref:users)",
+  "revieweeId": "ObjectId(ref:users)", // Indexed
+  "rating": 5, // 1-5
+  "comment": "Very professional and finished the work on time!",
+  "tags": ["On Time", "Excellent Skill"],
+  "createdAt": "ISODate"
+}
