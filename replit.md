@@ -1,6 +1,16 @@
 # Overview
 
-This is a full-stack application with both web and mobile components built for a marketplace or gig economy platform. The web application uses React Router v7 with Hono server, while the mobile app is built with Expo and React Native. The system supports user authentication, job posting/management, and file uploads with a focus on hirers and service providers.
+This is QuickJob (உடனடி வேலை), a hyperlocal real-time job platform for Tamil Nadu, built as a full-stack application with both web and mobile components. The platform connects job providers (skilled workers) with hirers (job posters) through a map-based interface similar to Rapido, featuring deep cultural integration, robust trust mechanisms, and bilingual support (Tamil/English).
+
+**Key Features:**
+- Dual-role system: Job Providers and Hirers
+- Hyperlocal job matching with real-time location tracking
+- Cultural integration with Tamil/Tanglish support
+- Aadhaar verification for trust building
+- UPI payment integration
+- Map-based job discovery
+- Video portfolio support for providers
+- Real-time job applications and hiring
 
 # User Preferences
 
@@ -17,12 +27,16 @@ Preferred communication style: Simple, everyday language.
 - **UI Components**: Chakra UI, custom polymorphic components, and React Aria for accessibility
 - **Development**: Vite with custom plugins for hot reload, font loading, and error handling
 
-### Mobile Application
+### Mobile Application (QuickJob)
 - **Framework**: Expo (SDK 53) with React Native
-- **Routing**: Expo Router with file-based navigation
-- **Cross-platform**: Web polyfills for React Native components to enable web compatibility
-- **Error Handling**: Custom error boundaries with remote error reporting
-- **State Management**: Zustand for authentication state
+- **Routing**: Expo Router with file-based navigation and role-based tab navigation
+- **Localization**: Complete Tamil/English support with context-based translations
+- **Maps Integration**: React Native Maps for job discovery and provider location
+- **Authentication**: Phone + OTP verification with Truecaller integration fallback
+- **User Roles**: Dynamic interface switching between Provider and Hirer roles
+- **Skills System**: Localized skills selection with primary/secondary categorization
+- **Portfolio**: Video and image portfolio support for job providers
+- **Real-time Features**: Location tracking and job notifications
 
 ## Backend Architecture
 
@@ -34,10 +48,14 @@ Preferred communication style: Simple, everyday language.
 - **Error Handling**: Centralized error reporting and logging
 
 ### Database Integration
-- **Database**: Neon (Postgres) with serverless configuration
-- **Query Builder**: Raw SQL with neon client
-- **Schema**: Users, jobs, skills, and portfolio tables
-- **Transactions**: Supported for complex operations
+- **Primary Database**: MongoDB with provided connection string (QuickJob data)
+- **Secondary Database**: Neon (Postgres) for web app legacy data
+- **MongoDB Schema**: 
+  - Users collection (dual-role with provider/hirer profiles)
+  - Jobs collection (with geospatial indexing)
+  - Applications collection (job applications tracking)
+  - Reviews collection (rating and feedback system)
+- **Geospatial Features**: 2dsphere indexes for location-based job matching
 
 ## Authentication and Authorization
 
