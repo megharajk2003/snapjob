@@ -1,7 +1,7 @@
-import ExceptionsManager from 'react-native/Libraries/Core/ExceptionsManager';
+const ExceptionsManager = require('react-native/Libraries/Core/ExceptionsManager');
 
 if (__DEV__) {
-  ExceptionsManager.handleException = (error, isFatal) => {
+  ExceptionsManager.handleException = (error: any, isFatal: any) => {
     // no-op
   };
 }

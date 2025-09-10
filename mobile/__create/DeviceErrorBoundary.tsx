@@ -1,4 +1,5 @@
-import React, { type ReactNode, useCallback, useEffect, useState } from 'react';
+import * as React from 'react';
+import { type ReactNode, useCallback, useEffect, useState } from 'react';
 import { SharedErrorBoundary, Button } from './SharedErrorBoundary';
 import * as Updates from 'expo-updates';
 import { SplashScreen } from 'expo-router/build/exports';

@@ -5,7 +5,8 @@ const serializeError = (error: any) => ({
   message: error?.message || 'Unknown error',
   stack: error?.stack || ''
 });
-import React, { type ReactNode, useEffect, useState, useCallback, useRef } from 'react';
+import * as React from 'react';
+import { type ReactNode, useEffect, useState, useCallback, useRef } from 'react';
 import { Animated, Text, View } from 'react-native';
 
 export function SharedErrorBoundary({
